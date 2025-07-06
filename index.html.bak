@@ -221,7 +221,7 @@
         // Configuration
         const GOOGLE_SHEET_ID = '1Pp6bvp4DoDJqVKIrNuN9N6zS_MhVex9UDRSC-nIGI6k';
         const CSV_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/export?format=csv`;
-        const AI_DRIVE_BASE = 'https://nicholasdemeter.github.io/youdontneedthis-inventory';
+        const AI_DRIVE_BASE = 'https://gensparkstorageprodwest.blob.core.windows.net/web-drive/b2e67a49-8e12-4c43-99b3-60b4ce0b26b4/FOLDER_MASTER_You_Dont_Need_This_WebSite';
         
         let allItems = [];
         let filteredItems = [];
