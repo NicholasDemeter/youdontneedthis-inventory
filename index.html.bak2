@@ -235,7 +235,7 @@
 
         // Utility Functions
         function sanitizeFolderName(name) {
-            return name;
+            return name.replace(/[^a-zA-Z0-9\-_]/g, '_');
         }
 
         function parseStarRating(rating) {
