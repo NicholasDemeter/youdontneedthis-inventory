@@ -323,56 +323,32 @@
     </footer>
 
     <script>
-        // Configuration
+        // Configuration - UPDATED TO USE GITHUB INSTEAD OF AZURE
         const GOOGLE_SHEET_ID = '1Pp6bvp4DoDJqVKIrNuN9N6zS_MhVex9UDRSC-nIGI6k';
         const CSV_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/export?format=csv`;
-        const AI_DRIVE_BASE = 'https://gensparkstorageprodwest.blob.core.windows.net/web-drive/b2e67a49-8e12-4c43-99b3-60b4ce0b26b4/FOLDER_MASTER_You_Dont_Need_This_WebSite';
+        const GITHUB_BASE = 'https://raw.githubusercontent.com/NicholasDemeter/youdontneedthis-inventory/main';
         
         let allItems = [];
         let filteredItems = [];
 
-        // Items that need folder name alignment (from the alignment spreadsheet)
-        const misalignedItems = [
-            'LOT-001', 'LOT-030', 'LOT-046', 'LOT-048', 'LOT-050', 'LOT-052', 
-            'LOT-055', 'LOT-056', 'LOT-062', 'LOT-063', 'LOT-064', 'LOT-065', 
-            'LOT-088', 'LOT-089', 'LOT-097', 'LOT-098', 'LOT-099', 'LOT-100', 'LOT-101'
-        ];
-
         // Utility Functions
-        function sanitizeFolderName(name) {
-            return name.replace(/[^a-zA-Z0-9\-_]/g, '_');
-        }
-
         function parseStarRating(rating) {
             if (!rating) return 0;
             const match = rating.match(/(\d+)\s*Stars?/i);
             return match ? parseInt(match[1]) : 0;
         }
 
-        function findActualFolderName(lotNumber, sheetFolderName) {
-            // For misaligned items, we need to find the actual folder name
-            // This is a simplified approach - in real implementation, you'd fetch the actual folder list
-            if (misalignedItems.includes(lotNumber)) {
-                // Return a best-guess folder name based on the pattern
-                return sanitizeFolderName(sheetFolderName);
-            }
-            return sanitizeFolderName(sheetFolderName);
-        }
-
+        // UPDATED: GitHub-based image URL functions (NO MORE AZURE!)
         function generateImageUrl(lotNumber, folderName) {
-            const actualFolderName = findActualFolderName(lotNumber, folderName);
-            // Try multiple image formats: _product.jpg, _thumb.jpg, photo.jpg
-            return `${AI_DRIVE_BASE}/${actualFolderName}/Photos/${lotNumber}_product.jpg`;
+            return `${GITHUB_BASE}/${encodeURIComponent(folderName)}/Photos/${lotNumber}_product.jpg`;
         }
 
         function generateThumbUrl(lotNumber, folderName) {
-            const actualFolderName = findActualFolderName(lotNumber, folderName);
-            return `${AI_DRIVE_BASE}/${actualFolderName}/Photos/${lotNumber}_thumb.jpg`;
+            return `${GITHUB_BASE}/${encodeURIComponent(folderName)}/Photos/${lotNumber}_thumb.jpg`;
         }
 
         function generatePhotoFallback(lotNumber, folderName) {
-            const actualFolderName = findActualFolderName(lotNumber, folderName);
-            return `${AI_DRIVE_BASE}/${actualFolderName}/Photos/photo.jpg`;
+            return `${GITHUB_BASE}/${encodeURIComponent(folderName)}/Photos/photo.jpg`;
         }
 
         function createPlaceholderImage() {
@@ -575,6 +551,8 @@
             try {
                 const response = await fetch(CSV_URL);
                 const csvText = await response.text();
+                
+                console.log("Papa Parse processing CSV...");
                 
                 // Use Papa Parse for proper CSV handling
                 const parsed = Papa.parse(csvText, {
