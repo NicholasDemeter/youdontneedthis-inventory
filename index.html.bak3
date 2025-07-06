@@ -220,7 +220,7 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Configuration
         const GOOGLE_SHEET_ID = '1Pp6bvp4DoDJqVKIrNuN9N6zS_MhVex9UDRSC-nIGI6k';
-        const CSV_URL = "products.csv";
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/export?format=csv`;
         const AI_DRIVE_BASE = 'https://nicholasdemeter.github.io/youdontneedthis-inventory';
         
         let allItems = [];
